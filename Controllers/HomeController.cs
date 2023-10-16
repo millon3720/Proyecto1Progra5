@@ -12,6 +12,14 @@ namespace ProyectoProgra5.Controllers
         {
             _logger = logger;
         }
+
+        #region Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+        #endregion Login
+
         #region Indice-Privacy
         public IActionResult Index()
         {

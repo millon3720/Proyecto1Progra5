@@ -4,3 +4,58 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="container">
+    <h2>Ejemplo Carrusel</h2>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicadores -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Entorno del carrusel -->
+        <div class="carousel-inner">
+
+            <div class="item active">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Bananas.jpg" alt="Paisaje-01" style="width:100%;">
+                <div class="carousel-caption">
+                    <h3>paisaje 1</h3>
+                    <p>Bananas</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="https://www.fertilizantesyabonos.com/wp-content/uploads/fruto-de-sandia-rayada.jpg" alt="Paisaje-02" style="width:100%;">
+                <div class="carousel-caption">
+                    <h3>Paisaje 2</h3>
+                    <p>Sandias</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="https://cdn2.img.sputniknews.lat/img/108764/33/1087643340_0:191:2942:1846_1920x0_80_0_0_ede7e92c57403506d59ee73e18c72a7e.jpg" alt="Paisaje-03" style="width:100%;">
+                <div class="carousel-caption">
+                    <h3>Manzanas</h3>
+                    <p>Forest Mist nature</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controles izquierda-derecha -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+</div>
