@@ -1,5 +1,47 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrito de Compras</title>
+    <style>
+        /* Estilos CSS básicos */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #cart {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Productos</h1>
+    <ul>
+        <li>
+            <span>Producto 1</span>
+            <button onclick="agregarAlCarrito('Producto 1', 10.99)">Agregar al Carrito</button>
+        </li>
+        <li>
+            <span>Producto 2</span>
+            <button onclick="agregarAlCarrito('Producto 2', 20.49)">Agregar al Carrito</button>
+        </li>
+        <!-- Agrega más productos aquí -->
+    </ul>
+
+    <h1>Carrito de Compras</h1>
+    <div id="cart">
+        <ul id="cart-items">
+            <!-- Los productos seleccionados se agregarán aquí -->
+        </ul>
+        <p>Total: <span id="cart-total">$0.00</span></p>
+    </div>
