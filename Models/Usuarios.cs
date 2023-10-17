@@ -22,5 +22,17 @@ namespace ProyectoProgra5.Models
         //Columnas para relacionar a la hora de crear el modelo de la Bd
         public int IdRol { get; set; }
         public Rol Rol { get; set; }
+
+        //public Usuarios(int idUsuario, string nombre, string correo, string cedula, string telefono, int edad, int idRol, Rol rol)
+        //{
+        //    IdUsuario=idUsuario;
+        //    Nombre=nombre;
+        //    Correo=correo;
+        //    Cedula=cedula;
+        //    Telefono=telefono;
+        //    Edad=edad;
+        //    IdRol=idRol;
+        //    Rol=rol;
+        //}
     }
 }

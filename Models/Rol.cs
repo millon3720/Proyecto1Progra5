@@ -16,5 +16,11 @@ namespace ProyectoProgra5.Models
 
         //Columnas para relacionar a la hora de crear el modelo de la Bd
         public ICollection<Usuarios> Usuarios { get; set; }
+        //public Rol(int idRol, string nombre, ICollection<Usuarios> usuarios)
+        //{
+        //    IdRol=idRol;
+        //    Nombre=nombre;
+        //    Usuarios=usuarios;
+        //}
     }
 }

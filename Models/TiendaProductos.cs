@@ -24,5 +24,15 @@ namespace ProyectoProgra5.Models
         //Columnas para relacionar a la hora de crear el modelo de la Bd
         public Tienda IdTiendas { get; set; }
         public Productos IdProductos { get; set; }
+        //public TiendaProductos(int idTiendaProducto, int idProducto, int idTienda, int cantidad, decimal precio, Tienda idTiendas, Productos idProductos)
+        //{
+        //    IdTiendaProducto=idTiendaProducto;
+        //    IdProducto=idProducto;
+        //    IdTienda=idTienda;
+        //    Cantidad=cantidad;
+        //    Precio=precio;
+        //    IdTiendas=idTiendas;
+        //    IdProductos=idProductos;
+        //}
     }
 }
