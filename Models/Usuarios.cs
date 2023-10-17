@@ -14,6 +14,7 @@ namespace ProyectoProgra5.Models
         [Required]
         public string Nombre { get; set; }
         public string Correo { get; set; }
+        public string Contraseña { get; set; }
         public string Cedula { get; set; }
         [MaxLength(10)]
         public string Telefono { get; set; }
@@ -23,16 +24,6 @@ namespace ProyectoProgra5.Models
         public int IdRol { get; set; }
         public Rol Rol { get; set; }
 
-        //public Usuarios(int idUsuario, string nombre, string correo, string cedula, string telefono, int edad, int idRol, Rol rol)
-        //{
-        //    IdUsuario=idUsuario;
-        //    Nombre=nombre;
-        //    Correo=correo;
-        //    Cedula=cedula;
-        //    Telefono=telefono;
-        //    Edad=edad;
-        //    IdRol=idRol;
-        //    Rol=rol;
-        //}
+    
     }
 }

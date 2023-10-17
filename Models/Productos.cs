@@ -24,13 +24,6 @@ namespace ProyectoProgra5.Models
         //Columnas para relacionar a la hora de crear el modelo de la Bd
         public ICollection<TiendaProductos> ProductosTienda { get; set; }
 
-        //public Productos(int idProducto, string nombre, string descripcion, string imagen, ICollection<TiendaProductos> productosTienda)
-        //{
-        //    IdProducto=idProducto;
-        //    Nombre=nombre;
-        //    Descripcion=descripcion;
-        //    Imagen=imagen;
-        //    ProductosTienda=productosTienda;
-        //}
+       
     }
 }

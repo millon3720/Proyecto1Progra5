@@ -11,7 +11,7 @@ using ProyectoProgra5.Data;
 namespace ProyectoGrupo5.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231015225447_BdProyectoGrupo5")]
+    [Migration("20231017000605_BdProyectoGrupo5")]
     partial class BdProyectoGrupo5
     {
         /// <inheritdoc />
@@ -74,6 +74,10 @@ namespace ProyectoGrupo5.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTienda"));
 
+                    b.Property<string>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -125,6 +129,10 @@ namespace ProyectoGrupo5.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Cedula")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contraseña")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
