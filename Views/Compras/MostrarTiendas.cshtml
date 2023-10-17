@@ -1,1 +1,26 @@
-﻿
+﻿@model IEnumerable<Tienda>
+
+<div class="container">
+    <h1 class="my-4">Catálogo de Tiendas</h1>
+
+    <div class="row">
+        @foreach (var listaTiendas in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card ">
+                    <br>
+                    <div class="img-container">
+                        <center>
+                            <img src="@listaTiendas.Imagen" alt="@listaTiendas.Nombre">
+                        </center>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@listaTiendas.Nombre</h5>
+                        <p class="card-text">@listaTiendas.Ubicacion</p>
+                        <a asp-area="" asp-controller="Compras" asp-action="MostrarArticulos" asp-route-id="@listaTiendas.IdTienda" class="btn btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

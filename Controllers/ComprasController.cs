@@ -11,13 +11,20 @@ namespace ProyectoGrupo5.Controllers
         public ComprasController(AppDbContext db) {
             ConexionBd = db;
         }  
-        public IActionResult MostrarArticulos() 
+        public IActionResult MostrarTiendas()
+        {
+            IEnumerable<Tienda> ListaTiendas = ConexionBd.Tienda;
+
+            var listaTiendas = ConexionBd.Tienda.ToList();
+            return View(listaTiendas);
+        }
+        public IActionResult MostrarArticulos(int? Id) 
         {
             IEnumerable<Productos> ListaProductos = ConexionBd.Productos;
 
             var listaProductos = ConexionBd.Productos.ToList();
             return View(listaProductos);
         }
-        
+       
     }
 }

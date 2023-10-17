@@ -4,23 +4,35 @@
     <h1 class="my-4">Catálogo de Productos</h1>
 
     <div class="row">
-        @foreach (var ListaProductos in Model)
+        @if (Model != null)
         {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="img-container">
-                        <center>
-                        <img src="@ListaProductos.Imagen" alt="@ListaProductos.Nombre">
-                        </center>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">@ListaProductos.Nombre</h5>
-                        <p class="card-text">@ListaProductos.Descripcion</p>
-                        <a href="#" class="btn btn-primary">Ver detalles</a>
-                        <a href="#" class="btn btn-primary">Agregar al carrito</a>
+            @foreach (var producto in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <br>
+                        <div class="img-container">
+                            <center>
+                                <img src="@producto.Imagen" alt="@producto.Nombre">
+                            </center>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@producto.Nombre</h5>
+                            <p class="card-text">@producto.Descripcion</p>
+                            <a href="#" class="btn btn-primary">Agregar al carrito</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+        }
+        else
+        {
+            <p>No hay productos disponibles en este momento.</p>
         }
     </div>
 </div>
+
+
+
+
+
