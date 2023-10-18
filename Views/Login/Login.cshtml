@@ -1,4 +1,5 @@
-﻿    @{
+﻿@model Usuarios
+ @{
     ViewData["Title"] = "Login";
 }
 
@@ -11,25 +12,28 @@
 
                         <div class="mb-md-5 mt-md-4 pb-5">
 
-                            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                            <p class="text-white-50 mb-5">Ingrese su correo y contraseña!</p>
+                            <h2 class="fw-bold mb-2 text-uppercase">Bienvenidos</h2>
+                            <p class="text-white-50 mb-5">Login</p>
 
+                            <div asp-validation-summary="All"></div>
                             <div class="form-outline form-white mb-4">
-                                <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                                <label class="form-label" for="typeEmailX">Correo</label>
+                                <label asp-for="Correo" class="form-label"></label>
+                                <input asp-for="Correo" type="email" class="form-control form-control-lg" />
+                                <span asp-validation-for="Correo" class="text-danger"></span>
                             </div>
 
                             <div class="form-outline form-white mb-4">
-                                <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                                <label class="form-label" for="typePasswordX">Contraseña</label>
+                                <label asp-for="Contraseña" class="form-label"></label>
+                                <input asp-for="Contraseña" type="password" class="form-control form-control-lg" />
+                                <span asp-validation-for="Contraseña" class="text-danger"></span>
                             </div>
 
-                            <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                            <button asp-controller="Login" asp-action="IniciarSesion" class="btn btn-outline-light btn-lg px-5" type="submit">Log in</button>
                         </div>
 
                         <div>
                             <p class="mb-0">
-                                No tienes una cuenta? <a href="" class="text-white-50 fw-bold">Registrase</a>
+                                No tienes una cuenta? <a asp-controller="Login" asp-action="Registrarse" class="text-white-50 fw-bold">Registrarse</a>
                             </p>
                         </div>
 
