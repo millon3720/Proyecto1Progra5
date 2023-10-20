@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@producto.Nombre</h5>
                             <p class="card-text">@producto.Descripcion</p>
-                            <a href="#" class="btn btn-primary">Agregar al carrito</a>
+                            <a asp-area="" asp-controller="Compras" asp-action="AgregarAlCarrito" asp-route-id="@producto.IdProducto" class="btn btn-primary">Ver detalles</a>
                         </div>
                     </div>
                 </div>

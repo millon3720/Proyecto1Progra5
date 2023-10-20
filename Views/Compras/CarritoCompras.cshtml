@@ -1,1 +1,49 @@
-﻿
+﻿@model IEnumerable<Productos>
+
+<div class="container">
+    <h1 class="my-4">Carrito De Compras</h1>
+
+    <div class="row">
+        @if (Model != null)
+        {
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Producto</th>
+                            <th>Nombre</th>                           
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Monto Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var producto in Model)
+                        {
+                            <tr>
+                                <td><img src="@producto.Imagen" alt="@producto.Nombre"></td>
+                                <td>@producto.Nombre</td>
+                                <td>@producto.Descripcion</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                
+                            </tr>
+                        }
+                    </tbody>                    
+                </table>
+                <div class="col-md-12">
+                    <p class ="text-right">Total General del Carrito: 0</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-12">
+                <p>No hay productos en el carrito de compras.</p>
+            </div>
+        }
+    </div>
+</div>
