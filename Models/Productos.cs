@@ -8,9 +8,9 @@ namespace ProyectoProgra5.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DisplayName("IdProducto")]
+        [DisplayName("Id")]
 
-        public int IdProducto { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Nombre { get; set; }
@@ -21,8 +21,6 @@ namespace ProyectoProgra5.Models
         [Required]
         public string Imagen { get; set; }
 
-        //Columnas para relacionar a la hora de crear el modelo de la Bd
-        public ICollection<TiendaProductos> ProductosTienda { get; set; }
 
        
     }
