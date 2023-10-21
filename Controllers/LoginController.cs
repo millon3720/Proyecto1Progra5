@@ -30,16 +30,15 @@ namespace ProyectoGrupo5.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Registrarse(Usuarios u)
         {
-
-            u.IdRol=2;
-
-            if (!ModelState.IsValid) { return View(u); }
-
+            // Buscar el rol con Id igual a 2 en la base de datos
+            Rol rol = _db.Roles.FirstOrDefault(r => r.Id == 2);
+            u.Rol = rol;
             _db.Usuarios.Add(u);
             _db.SaveChanges();
-
             TempData["Exito"] = "Usuario creado ok";
             return RedirectToAction("Login");
+
         }
+
     }
 }

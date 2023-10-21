@@ -25,7 +25,7 @@ namespace ProyectoGrupo5.Controllers
             var listaTiendas = ConexionBd.Tienda.ToList();
             return View(listaTiendas);
         }
-        public IActionResult MostrarArticulos(int? Id) 
+        public IActionResult MostrarArticulos(int? Id)
         {
 
             //var productosDeTienda = ConexionBd.TiendaProductos
@@ -49,12 +49,12 @@ namespace ProyectoGrupo5.Controllers
         public IActionResult AgregarAlCarrito(int? Id)
         {
             var Articulo = ConexionBd.Productos.Find(Id);
-           _carrito.AgregarProducto(Articulo);
+            _carrito.AgregarProducto(Articulo);
             return RedirectToAction("MostrarArticulos");
         }
         public IActionResult CarritoCompras()
         {
-            
+
             return View(_carrito.ObtenerProductos());
         }
     }

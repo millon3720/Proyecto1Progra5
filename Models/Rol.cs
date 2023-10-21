@@ -8,14 +8,13 @@ namespace ProyectoProgra5.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DisplayName("IdRol")]
-        public int IdRol { get; set; }
+        [DisplayName("Id")]
+        public int Id { get; set; }
 
         [Required]
         public string Nombre { get; set; }
 
         //Columnas para relacionar a la hora de crear el modelo de la Bd
-        public ICollection<Usuarios> Usuarios { get; set; }
        
     }
 }
