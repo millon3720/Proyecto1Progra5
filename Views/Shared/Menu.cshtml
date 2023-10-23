@@ -4,6 +4,8 @@
 @{
     string Login = HttpContextAccessor.HttpContext.Session.GetString("Login");
     string Usuario = HttpContextAccessor.HttpContext.Session.GetString("Usuario");
+    string Rol = HttpContextAccessor.HttpContext.Session.GetString("Rol");
+  
 }
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
@@ -23,12 +25,15 @@
                         <a class="nav-link text-light" asp-area="" asp-controller="Compras" asp-action="MostrarTiendas">Compras</a>
                     </li>
 
+                    @if(Rol == "Administrador")
+                    {
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Tiendas" asp-action="Index">Tiendas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
                     </li>
+                    }
                 }
             </ul>                
             @if (Login == "True")
