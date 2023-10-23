@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoGrupo5.Migrations
 {
     /// <inheritdoc />
-    public partial class DbProyecto : Migration
+    public partial class BdProyecto : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -87,21 +87,21 @@ namespace ProyectoGrupo5.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TiendasId = table.Column<int>(type: "int", nullable: false),
-                    ProductosId = table.Column<int>(type: "int", nullable: false)
+                    TiendaId = table.Column<int>(type: "int", nullable: false),
+                    ProductoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TiendaProductos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TiendaProductos_Productos_ProductosId",
-                        column: x => x.ProductosId,
+                        name: "FK_TiendaProductos_Productos_ProductoId",
+                        column: x => x.ProductoId,
                         principalTable: "Productos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TiendaProductos_Tienda_TiendasId",
-                        column: x => x.TiendasId,
+                        name: "FK_TiendaProductos_Tienda_TiendaId",
+                        column: x => x.TiendaId,
                         principalTable: "Tienda",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -117,8 +117,8 @@ namespace ProyectoGrupo5.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Pendiente = table.Column<bool>(type: "bit", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ProductosId = table.Column<int>(type: "int", nullable: false),
-                    UsuariosId = table.Column<int>(type: "int", nullable: false)
+                    UsuariosId = table.Column<int>(type: "int", nullable: false),
+                    ProductosId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,14 +138,14 @@ namespace ProyectoGrupo5.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TiendaProductos_ProductosId",
+                name: "IX_TiendaProductos_ProductoId",
                 table: "TiendaProductos",
-                column: "ProductosId");
+                column: "ProductoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TiendaProductos_TiendasId",
+                name: "IX_TiendaProductos_TiendaId",
                 table: "TiendaProductos",
-                column: "TiendasId");
+                column: "TiendaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_RolId",

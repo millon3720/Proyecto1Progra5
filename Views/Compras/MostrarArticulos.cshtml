@@ -1,36 +1,55 @@
-﻿@model IEnumerable<Productos>
+﻿@model IEnumerable<ProyectoProgra5.Models.TiendaProductos>
 
-<div class="container">
-    <h1 class="my-4">Catálogo de Productos</h1>
 
-    <div class="row">
-        @if (Model != null)
-        {
-            @foreach (var producto in Model)
+<form asp-area="" asp-controller="Compras" asp-action="AgregarAlCarrito" method="post">
+
+    <div class="container">
+        <h1 class="my-4">Catálogo de Productos</h1>
+        <div class="row">
+            @if (Model != null && Model.Any())
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <br>
-                        <div class="img-container">
-                            <center>
-                                <img src="@producto.Imagen" alt="@producto.Nombre">
-                            </center>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@producto.Nombre</h5>
-                            <p class="card-text">@producto.Descripcion</p>
-                            <a asp-area="" asp-controller="Compras" asp-action="AgregarAlCarrito" asp-route-id="@* @producto.IdProducto *@" class="btn btn-primary">Ver detalles</a>
+                @foreach (var tiendaProducto in Model)
+                {
+                    <input type="hidden" name="IdProductos" value="@tiendaProducto.Productos.Id" />
+                    <input type="hidden" name="Precio" value="@tiendaProducto.Precio" />
+                    <input type="hidden" name="IdTienda" value="@tiendaProducto.Tiendas.Id" />
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <br>
+                            <div class="img-container">
+                                <center>
+                                    <img src="@tiendaProducto.Productos.Imagen" alt="@tiendaProducto.Productos.Nombre">
+                                </center>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@tiendaProducto.Productos.Nombre</h5>
+                                <p class="card-text">@tiendaProducto.Productos.Descripcion</p>
+                                <p class="card-text">Precio: @tiendaProducto.Precio</p>
+
+                                <div class="form-group">
+                                    <label for="cantidad">Cantidad:</label>
+                                    <select name="Cantidad" id="Cantidad" class="form-select w-auto">
+                                        @for (int i = 1; i <= tiendaProducto.Cantidad; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Agregar Al Carrito</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-        }
-        else
-        {
-            <p>No hay productos disponibles en este momento.</p>
-        }
+            else
+            {
+                <p>No hay productos disponibles en este momento.</p>
+            }
+        </div>
     </div>
-</div>
+</form>
 
 
 
