@@ -138,17 +138,17 @@ namespace ProyectoGrupo5.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductosId")
+                    b.Property<int>("ProductoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TiendasId")
+                    b.Property<int>("TiendaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductosId");
+                    b.HasIndex("ProductoId");
 
-                    b.HasIndex("TiendasId");
+                    b.HasIndex("TiendaId");
 
                     b.ToTable("TiendaProductos");
                 });
@@ -198,13 +198,13 @@ namespace ProyectoGrupo5.Migrations
             modelBuilder.Entity("ProyectoGrupo5.Models.Ventas", b =>
                 {
                     b.HasOne("ProyectoProgra5.Models.Productos", "Productos")
-                        .WithMany()
+                        .WithMany("Ventas")
                         .HasForeignKey("ProductosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProyectoProgra5.Models.Usuarios", "Usuarios")
-                        .WithMany()
+                        .WithMany("Ventas")
                         .HasForeignKey("UsuariosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -217,14 +217,14 @@ namespace ProyectoGrupo5.Migrations
             modelBuilder.Entity("ProyectoProgra5.Models.TiendaProductos", b =>
                 {
                     b.HasOne("ProyectoProgra5.Models.Productos", "Productos")
-                        .WithMany()
-                        .HasForeignKey("ProductosId")
+                        .WithMany("TiendaProductos")
+                        .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProyectoProgra5.Models.Tienda", "Tiendas")
-                        .WithMany()
-                        .HasForeignKey("TiendasId")
+                        .WithMany("TiendaProductos")
+                        .HasForeignKey("TiendaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -242,6 +242,23 @@ namespace ProyectoGrupo5.Migrations
                         .IsRequired();
 
                     b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("ProyectoProgra5.Models.Productos", b =>
+                {
+                    b.Navigation("TiendaProductos");
+
+                    b.Navigation("Ventas");
+                });
+
+            modelBuilder.Entity("ProyectoProgra5.Models.Tienda", b =>
+                {
+                    b.Navigation("TiendaProductos");
+                });
+
+            modelBuilder.Entity("ProyectoProgra5.Models.Usuarios", b =>
+                {
+                    b.Navigation("Ventas");
                 });
 #pragma warning restore 612, 618
         }

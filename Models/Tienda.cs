@@ -19,6 +19,7 @@ namespace ProyectoProgra5.Models
         public string Nombre { get; set; }
         [Required]
         public string Imagen { get; set; }
-      
+        [InverseProperty("Tiendas")]
+        public List<TiendaProductos> TiendaProductos { get; set; }
     }
 }

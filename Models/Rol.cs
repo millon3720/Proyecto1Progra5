@@ -12,6 +12,8 @@ namespace ProyectoProgra5.Models
         public int Id { get; set; }
 
         [Required]
+        [InverseProperty("Usuarios")]
+
         public string Nombre { get; set; }
 
         //Columnas para relacionar a la hora de crear el modelo de la Bd

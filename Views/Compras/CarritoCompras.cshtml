@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Productos>
+﻿@model IEnumerable<ProyectoGrupo5.Models.Ventas>
 
 <div class="container">
     <h1 class="my-4">Carrito De Compras</h1>
@@ -16,6 +16,7 @@
                             <th>Descripción</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
+                            <th>Agregado</th>
                             <th>Monto Total</th>
                         </tr>
                     </thead>
@@ -23,19 +24,20 @@
                         @foreach (var producto in Model)
                         {
                             <tr>
-                                <td><img src="@producto.Imagen" alt="@producto.Nombre"></td>
-                                <td>@producto.Nombre</td>
-                                <td>@producto.Descripcion</td>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
+                                <td><img src="@producto.Productos.Imagen" alt="@producto.Productos.Nombre"></td>
+                                <td>@producto.Productos.Nombre</td>
+                                <td>@producto.Productos.Descripcion</td>
+                                <td>@producto.Total/@producto.Cantidad</td>
+                                <td>@producto.Cantidad</td>
+                                <td>@producto.Fecha</td>
+                                <td>@producto.Total</td>
                                 
                             </tr>
                         }
                     </tbody>                    
                 </table>
                 <div class="col-md-12">
-                    <p class ="text-right">Total General del Carrito: 0</p>
+                    <p style="text-align: right;"><strong>Total General del Carrito: @Model.Sum(producto => producto.Total)</strong></p>
                 </div>
             </div>
         }

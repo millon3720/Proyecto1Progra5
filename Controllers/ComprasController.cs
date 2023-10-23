@@ -11,12 +11,9 @@ namespace ProyectoGrupo5.Controllers
     public class ComprasController : Controller
     {
         private AppDbContext ConexionBd;
-        private readonly Carrito _carrito;
-
-        public ComprasController(AppDbContext db, Carrito carrito)
+        public ComprasController(AppDbContext db)
         {
             ConexionBd = db;
-            _carrito = carrito;
         }
         public IActionResult MostrarTiendas()
         {
@@ -28,34 +25,39 @@ namespace ProyectoGrupo5.Controllers
         public IActionResult MostrarArticulos(int? Id)
         {
 
-            //var productosDeTienda = ConexionBd.TiendaProductos
-            //.Where(tp => tp.IdTienda == Id)
-            //.Join(
-            //    ConexionBd.Productos,
-            //    tp => tp.IdProductos,
-            //    p => p.IdProducto,
-            //    (tp, p) => new { TiendaProducto = tp, Producto = p }
-            //)
-            //.Select(joined => joined.Producto)
-            //.ToList();
-
-            //return productosDeTienda;
-
             IEnumerable<Productos> ListaProductos = ConexionBd.Productos;
 
-            var listaProductos = ConexionBd.Productos.ToList();
-            return View(listaProductos);
+            var productosDeTienda = ConexionBd.TiendaProductos
+        .Where(tp => tp.Tiendas.Id == Id)
+        .Include(tp => tp.Productos).Include(tp => tp.Tiendas)
+        .ToList();
+            return View(productosDeTienda);
         }
-        public IActionResult AgregarAlCarrito(int? Id)
+        public IActionResult AgregarAlCarrito(int IdProductos, int Cantidad,decimal Precio, int IdTienda)
         {
-            var Articulo = ConexionBd.Productos.Find(Id);
-            _carrito.AgregarProducto(Articulo);
-            return RedirectToAction("MostrarArticulos");
+
+            int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            var venta = new Ventas
+            {
+                Cantidad = Cantidad,
+                Fecha = DateTime.Now,  
+                Pendiente = true,      
+                Total = Precio*Cantidad,
+                Productos = ConexionBd.Productos.Find(IdProductos),      
+                Usuarios = ConexionBd.Usuarios.Find(IdUsuario)
+            };
+
+            ConexionBd.Ventas.Add(venta);
+            ConexionBd.SaveChanges();
+            return RedirectToAction("MostrarArticulos", new { Id = IdTienda });
+
         }
         public IActionResult CarritoCompras()
         {
-
-            return View(_carrito.ObtenerProductos());
+            int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            List<Ventas> carritoDeVentas = ConexionBd.Ventas.Where(tp=>tp.Usuarios.Id== IdUsuario).Include(v => v.Productos).ToList();
+            
+            return View(carritoDeVentas);
         }
     }
 }
