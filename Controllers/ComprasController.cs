@@ -55,9 +55,18 @@ namespace ProyectoGrupo5.Controllers
         public IActionResult CarritoCompras()
         {
             int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-            List<Ventas> carritoDeVentas = ConexionBd.Ventas.Where(tp=>tp.Usuarios.Id== IdUsuario).Include(v => v.Productos).ToList();
-            
+            List<Ventas> carritoDeVentas = ConexionBd.Ventas.Where(tp => tp.Usuarios.Id == IdUsuario && tp.Pendiente == true).Include(v => v.Productos).ToList();
+
             return View(carritoDeVentas);
+        }
+        public IActionResult BorrarCarrito(int Id)
+        {
+            var Eliminar = ConexionBd.Ventas.FirstOrDefault(v => v.Id == Id);
+
+            ConexionBd.Ventas.Remove(Eliminar);
+            ConexionBd.SaveChanges();
+
+            return RedirectToAction("CarritoCompras");
         }
     }
 }

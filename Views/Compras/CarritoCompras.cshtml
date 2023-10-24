@@ -10,7 +10,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-
                             <th>Producto</th>
                             <th>Nombre</th>                           
                             <th>Descripción</th>
@@ -18,6 +17,7 @@
                             <th>Cantidad</th>
                             <th>Agregado</th>
                             <th>Monto Total</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,11 +27,13 @@
                                 <td><img src="@producto.Productos.Imagen" alt="@producto.Productos.Nombre"></td>
                                 <td>@producto.Productos.Nombre</td>
                                 <td>@producto.Productos.Descripcion</td>
-                                <td>@producto.Total/@producto.Cantidad</td>
+                                <td>@(producto.Total / producto.Cantidad)</td>
                                 <td>@producto.Cantidad</td>
                                 <td>@producto.Fecha</td>
                                 <td>@producto.Total</td>
-                                
+                                <td>
+                                    <a asp-area="" asp-controller="Compras" asp-action="BorrarCarrito" asp-route-id=" @producto.Id" class="btn btn-danger">Eliminar</a>
+                                </td>
                             </tr>
                         }
                     </tbody>                    
