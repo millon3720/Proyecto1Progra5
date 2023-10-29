@@ -5,15 +5,21 @@ using ProyectoGrupo5.Models;
 using ProyectoProgra5.Data;
 using ProyectoProgra5.Models;
 using System.Data;
+using ProyectoGrupo5.Service;
+
+
 
 namespace ProyectoGrupo5.Controllers
 {
     public class ComprasController : Controller
     {
+        private readonly EmailServices EmailService;
         private AppDbContext ConexionBd;
-        public ComprasController(AppDbContext db)
+       
+        public ComprasController(AppDbContext db, EmailServices _EmailService)
         {
             ConexionBd = db;
+            EmailService = _EmailService;
         }
         public IActionResult MostrarTiendas()
         {
@@ -33,17 +39,17 @@ namespace ProyectoGrupo5.Controllers
         .ToList();
             return View(productosDeTienda);
         }
-        public IActionResult AgregarAlCarrito(int IdProductos, int Cantidad,decimal Precio, int IdTienda)
+        public IActionResult AgregarAlCarrito(int IdProductos, int Cantidad, decimal Precio, int IdTienda)
         {
 
             int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             var venta = new Ventas
             {
                 Cantidad = Cantidad,
-                Fecha = DateTime.Now,  
-                Pendiente = true,      
-                Total = Precio*Cantidad,
-                Productos = ConexionBd.Productos.Find(IdProductos),      
+                Fecha = DateTime.Now,
+                Pendiente = true,
+                Total = Precio * Cantidad,
+                Productos = ConexionBd.Productos.Find(IdProductos),
                 Usuarios = ConexionBd.Usuarios.Find(IdUsuario)
             };
 
@@ -65,8 +71,19 @@ namespace ProyectoGrupo5.Controllers
 
             ConexionBd.Ventas.Remove(Eliminar);
             ConexionBd.SaveChanges();
-
             return RedirectToAction("CarritoCompras");
+        }
+
+        public IActionResult EnviarCorreo()
+        {
+            int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            List<Ventas> carritoDeVentas = ConexionBd.Ventas.Where(tp => tp.Usuarios.Id == IdUsuario && tp.Pendiente == true).Include(v => v.Productos).ToList();
+
+            CrearPdf factura = new CrearPdf();
+            var NombreFactura=factura.CrearFactura(HttpContext.Session.GetString("Usuario"), carritoDeVentas);
+            EmailService.sendEmail(HttpContext.Session.GetString("Correo"), NombreFactura);
+            return RedirectToAction("MostrarTiendas");
+
         }
     }
 }

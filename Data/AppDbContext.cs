@@ -15,9 +15,7 @@ namespace ProyectoProgra5.Data
         public DbSet<Tienda> Tienda { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Ventas> Ventas { get; set; }
-        public DbSet<TiendaProductos> TiendaProductos { get; set; }
-
-        
+        public DbSet<TiendaProductos> TiendaProductos { get; set; }      
         
     }
 }

@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using ProyectoProgra5.Data;
 using ProyectoProgra5.Models;
+using ProyectoGrupo5.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<EmailServices>();  
 builder.Services.AddHttpContextAccessor();
 
 

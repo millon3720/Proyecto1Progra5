@@ -38,6 +38,7 @@ namespace ProyectoGrupo5.Controllers
                     HttpContext.Session.SetString("Login", "True");
                     HttpContext.Session.SetInt32("IdUsuario",item.Id);
                     HttpContext.Session.SetString("Usuario", item.Nombre);
+                    HttpContext.Session.SetString("Correo", item.Correo);
                     HttpContext.Session.SetString("Rol", item.Rol.Nombre);
                 }
 
