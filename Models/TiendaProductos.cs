@@ -16,6 +16,7 @@ namespace ProyectoProgra5.Models
 
         public decimal Precio { get; set; }
         //Columnas para relacionar a la hora de crear el modelo de la Bd
+
         [ForeignKey("TiendaId")]
         public Tienda Tiendas { get; set; }
 
