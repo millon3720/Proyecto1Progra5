@@ -3,10 +3,10 @@
     public class ProductEntity
     {
         public int Id { get; set; }
-        public string Product { get; set; }
-        public long Rate { get; set; }
-            public long Quanity { get; set; }
-        public string ImagePath { get; set; }
+        public string Producto { get; set; }
+        public decimal Precio { get; set; }
+            public decimal Cantidad { get; set; }
+        public decimal Total { get; set; }
 
 
     }
