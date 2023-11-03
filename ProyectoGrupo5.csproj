@@ -34,6 +34,8 @@
     <PackageReference Include="PayPal" Version="1.9.1" />
     <PackageReference Include="PayPalCheckoutSdk" Version="1.0.4" />
     <PackageReference Include="Stripe.net" Version="43.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
+    <PackageReference Include="ReCaptcha.Net" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
