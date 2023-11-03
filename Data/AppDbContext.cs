@@ -16,6 +16,7 @@ namespace ProyectoProgra5.Data
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Ventas> Ventas { get; set; }
         public DbSet<TiendaProductos> TiendaProductos { get; set; }      
+        public DbSet<ProyectoGrupo5.Models.ProductEntity> ProductEntity { get; set; } = default!;
         
     }
 }
