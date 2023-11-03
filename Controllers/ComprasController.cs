@@ -15,11 +15,13 @@ namespace ProyectoGrupo5.Controllers
     {
         private readonly EmailServices EmailService;
         private AppDbContext ConexionBd;
-       
-        public ComprasController(AppDbContext db, EmailServices _EmailService)
+        //private readonly IPaypalServices _paypalServices;
+        
+        public ComprasController(AppDbContext db, EmailServices _EmailService/*IPaypalServices paypalServices*/)
         {
             ConexionBd = db;
-            EmailService = _EmailService;
+            EmailService = _EmailService; 
+            //_paypalServices = paypalServices;
         }
         public IActionResult MostrarTiendas()
         {
@@ -85,5 +87,24 @@ namespace ProyectoGrupo5.Controllers
             return RedirectToAction("MostrarTiendas");
 
         }
+
+        //public async Task<IActionResult> CreateOrder()
+        //{
+        //    var request = new OrdersCreateRequest();
+        //    request.Prefer("return=representation");
+        //    request.RequestBody(BuildRequestBody());
+
+        //    var response = await new PayPalHttpClient(_paypalOptions.Value).Execute(request);
+        //    var order = response.Result<PayPalCheckoutSdk.Orders.Order>();
+
+        //    return Redirect(order.Links[1].Href); // Redirige al usuario a la página de PayPal para completar el pago
+        //}
+
+        //private OrderRequest BuildRequestBody()
+        //{
+        //    // Crea y devuelve un objeto OrderRequest con los detalles del pedido
+        //    // Consulta la documentación de PayPal para obtener detalles específicos
+        //    return new OrderRequest();
+        //}
     }
 }

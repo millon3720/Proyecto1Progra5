@@ -7,7 +7,6 @@
         @if (Model != null)
         {
             <div class="col-12">
-                <a asp-area="" asp-controller="Compras" asp-action="EnviarCorreo" asp-route-id=" " class="btn btn-info">Correo</a>
 
                 <table class="table">
                     <thead>
@@ -40,8 +39,9 @@
                         }
                     </tbody>                    
                 </table>
-                <div class="col-md-12">
+                <div class="col-md-12 text-right" style="text-align: right;">
                     <p style="text-align: right;"><strong>Total General del Carrito: @Model.Sum(producto => producto.Total)</strong></p>
+                    <a asp-area="" asp-controller="Compras" asp-action="EnviarCorreo" asp-route-id=" "  class="btn btn-info ">Realizar Pago</a>
                 </div>
             </div>
         }
@@ -51,5 +51,13 @@
                 <p>No hay productos en el carrito de compras.</p>
             </div>
         }
+
+
     </div>
 </div>
+<form method="post" asp-action="Pagar">
+    <div>
+        <input asp-action="Amount"/>
+        <button type="submit">as</button>
+    </div>
+</form>
