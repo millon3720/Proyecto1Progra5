@@ -28,16 +28,7 @@ namespace ProyectoGrupo5.Controllers
         {
             if (Pago== "Realizado")
             {
-                int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
-
-                EnviarCorreo();
-                var ventasPorActualizar = ConexionBd.Ventas.Where(v => v.UsuariosId == IdUsuario && v.Pendiente == true).ToList();
-
-                foreach (var venta in ventasPorActualizar)
-                {
-                    venta.Pendiente = false; 
-                }
-                ConexionBd.SaveChanges();
+                PagoRealizado();
             }
             IEnumerable<Tienda> ListaTiendas = ConexionBd.Tienda;
 
@@ -89,7 +80,6 @@ namespace ProyectoGrupo5.Controllers
             ConexionBd.SaveChanges();
             return RedirectToAction("CarritoCompras");
         }
-
         public void EnviarCorreo()
         {
             int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
@@ -99,60 +89,89 @@ namespace ProyectoGrupo5.Controllers
             var NombreFactura=factura.CrearFactura(HttpContext.Session.GetString("Usuario"), carritoDeVentas);
             EmailService.sendEmail(HttpContext.Session.GetString("Correo"), NombreFactura);
         }
-
         public ActionResult RealizarPago()
         {
             int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             List<Ventas> carritoDeVentas = ConexionBd.Ventas.Where(tp => tp.Usuarios.Id == IdUsuario && tp.Pendiente == true).Include(v => v.Productos).ToList();
-
-            List<ProductEntity> ProductList = new List<ProductEntity>();
-
-            foreach (var item in carritoDeVentas)
+            if (carritoDeVentas.Count > 0)
             {
-                ProductEntity product = new ProductEntity
+                List<ProductEntity> ProductList = new List<ProductEntity>();
+
+                foreach (var item in carritoDeVentas)
                 {
-                    Producto = item.Productos.Nombre,
-                    Precio = (item.Total / item.Cantidad),
-                    Cantidad = item.Cantidad,
-                    Total = item.Total
-                };
-
-                ProductList.Add(product);
-            }
-
-            var options = new SessionCreateOptions
-            {
-                SuccessUrl = Url.Action("MostrarTiendas", "Compras", new { Pago = "Realizado" }, "https"),
-                CancelUrl = Url.Action("CarritoCompras", "Compras", null, "https"),
-                LineItems = new List<SessionLineItemOptions>(),
-                Mode = "payment"
-            };
-
-            foreach (var item in ProductList)
-            {
-                var sessionListItem = new SessionLineItemOptions
-                {
-                    PriceData = new SessionLineItemPriceDataOptions
+                    ProductEntity product = new ProductEntity
                     {
-                        UnitAmount = (long)(item.Precio*100),
-                        Currency = "crc",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = item.Producto.ToString(),
+                        Producto = item.Productos.Nombre,
+                        Precio = (item.Total / item.Cantidad),
+                        Cantidad = item.Cantidad,
+                        Total = item.Total
+                    };
 
-                        }
-                    },
-                    Quantity = (long)item.Cantidad
+                    ProductList.Add(product);
+                }
+
+                var options = new SessionCreateOptions
+                {
+                    SuccessUrl = Url.Action("MostrarTiendas", "Compras", new { Pago = "Realizado" }, "https"),
+                    CancelUrl = Url.Action("CarritoCompras", "Compras", null, "https"),
+                    LineItems = new List<SessionLineItemOptions>(),
+                    Mode = "payment"
                 };
-                options.LineItems.Add(sessionListItem);
+
+                foreach (var item in ProductList)
+                {
+                    var sessionListItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Precio * 100),
+                            Currency = "crc",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Producto.ToString(),
+
+                            }
+                        },
+                        Quantity = (long)item.Cantidad
+                    };
+                    options.LineItems.Add(sessionListItem);
+                }
+
+                var service = new SessionService();
+                Session session = service.Create(options);
+                TempData["Session"] = session.Id;
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
             }
+            return RedirectToAction("MostrarTiendas");
 
-            var service = new SessionService();
-            Session session = service.Create(options);
-            TempData["Session"] = session.Id;
-            Response.Headers.Add("Location", session.Url);
-            return new StatusCodeResult(303);
+        }
+        public void PagoRealizado()
+        {
+            int IdUsuario = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            EnviarCorreo();
+            var ventasPorActualizar = ConexionBd.Ventas.Where(v => v.UsuariosId == IdUsuario && v.Pendiente == true).ToList();
 
+            foreach (var venta in ventasPorActualizar)
+            {
+                TiendaProductos tiendaProducto = ConexionBd.TiendaProductos.FirstOrDefault(tp => tp.Productos.Id == venta.Productos.Id);
+
+                if (tiendaProducto != null)
+                {
+                    if (tiendaProducto.Cantidad - venta.Cantidad < 0)
+                    {
+                        tiendaProducto.Cantidad = 0;
+                    }
+                    else
+                    {
+                        tiendaProducto.Cantidad = tiendaProducto.Cantidad - venta.Cantidad;
+                    }
+                    ConexionBd.SaveChanges();
+                }
+                venta.Pendiente = false;
+
+            }
+            ConexionBd.SaveChanges();
         }
     }
 }
