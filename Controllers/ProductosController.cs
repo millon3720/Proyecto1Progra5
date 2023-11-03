@@ -10,104 +10,104 @@ using ProyectoProgra5.Models;
 
 namespace ProyectoGrupo5.Controllers
 {
-    public class TiendasController : Controller
+    public class ProductosController : Controller
     {
         private readonly AppDbContext _context;
 
-        public TiendasController(AppDbContext context)
+        public ProductosController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tiendas
+        // GET: Productos
         public async Task<IActionResult> Index()
         {
-              return _context.Tienda != null ? 
-                          View(await _context.Tienda.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.Tienda'  is null.");
+              return _context.Productos != null ? 
+                          View(await _context.Productos.ToListAsync()) :
+                          Problem("Entity set 'AppDbContext.Productos'  is null.");
         }
 
-        // GET: Tiendas/Details/5
+        // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tienda == null)
+            if (id == null || _context.Productos == null)
             {
                 return NotFound();
             }
 
-            var tienda = await _context.Tienda
+            var productos = await _context.Productos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tienda == null)
+            if (productos == null)
             {
                 return NotFound();
             }
 
-            return View(tienda);
+            return View(productos);
         }
 
-        // GET: Tiendas/Create
+        // GET: Productos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tiendas/Create
+        // POST: Productos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Ubicacion,Nombre,Imagen")] Tienda tienda)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Imagen")] Productos productos)
         {
             try
             {
-                _context.Add(tienda);
+                _context.Add(productos);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
-                return View(tienda);
+
+                return View(productos);
             }
-               
-            
-            
+
+
         }
 
-        // GET: Tiendas/Edit/5
+        // GET: Productos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tienda == null)
+            if (id == null || _context.Productos == null)
             {
                 return NotFound();
             }
 
-            var tienda = await _context.Tienda.FindAsync(id);
-            if (tienda == null)
+            var productos = await _context.Productos.FindAsync(id);
+            if (productos == null)
             {
                 return NotFound();
             }
-            return View(tienda);
+            return View(productos);
         }
 
-        // POST: Tiendas/Edit/5
+        // POST: Productos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Ubicacion,Nombre,Imagen")] Tienda tienda)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Imagen")] Productos productos)
         {
-            if (id != tienda.Id)
+            if (id != productos.Id)
             {
                 return NotFound();
             }
             try
             {
-                _context.Update(tienda);
+                _context.Update(productos);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TiendaExists(tienda.Id))
+                if (!ProductosExists(productos.Id))
                 {
                     return NotFound();
                 }
@@ -120,46 +120,46 @@ namespace ProyectoGrupo5.Controllers
 
         }
 
-        // GET: Tiendas/Delete/5
+        // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tienda == null)
+            if (id == null || _context.Productos == null)
             {
                 return NotFound();
             }
 
-            var tienda = await _context.Tienda
+            var productos = await _context.Productos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tienda == null)
+            if (productos == null)
             {
                 return NotFound();
             }
 
-            return View(tienda);
+            return View(productos);
         }
 
-        // POST: Tiendas/Delete/5
+        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tienda == null)
+            if (_context.Productos == null)
             {
-                return Problem("Entity set 'AppDbContext.Tienda'  is null.");
+                return Problem("Entity set 'AppDbContext.Productos'  is null.");
             }
-            var tienda = await _context.Tienda.FindAsync(id);
-            if (tienda != null)
+            var productos = await _context.Productos.FindAsync(id);
+            if (productos != null)
             {
-                _context.Tienda.Remove(tienda);
+                _context.Productos.Remove(productos);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TiendaExists(int id)
+        private bool ProductosExists(int id)
         {
-          return (_context.Tienda?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Productos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
