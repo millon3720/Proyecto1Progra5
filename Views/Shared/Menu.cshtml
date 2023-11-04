@@ -27,14 +27,18 @@
 
                     @if (Rol == "Administrador")
                     {
-                    <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Tiendas" asp-action="Index">MantenimientoTiendas</a>
-                    </li>
-                    <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Productos" asp-action="Index">MantenimientoProductos</a>
-                    </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="TiendaProductos" asp-action="Index">MantenimientoTiendaProductos</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Tiendas" asp-action="Index">Mantenimiento Tiendas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Productos" asp-action="Index">Mantenimiento Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="TiendaProductos" asp-action="Index">Mantenimiento TiendaProductos</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Usuarios" asp-action="Index">Mantenimiento Usuarios</a>
                         </li>
                     }
                 }
