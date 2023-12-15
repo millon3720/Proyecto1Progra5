@@ -9,23 +9,24 @@ using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Configuración de servicios
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<EmailServices>();
-
 builder.Services.AddHttpContextAccessor();
-
-
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-//builder.Services.Configure<PayPalSettings>(builder.Configuration.GetSection("PayPal"));
-//builder.Services.AddHttpClient<PayPalController>();
+
+// Configuración de la API
+builder.Services.AddControllers();
+
+// Configuración de Stripe
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -36,15 +37,16 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
-StripeConfiguration.ApiKey=builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
-
+// Middleware de autorización y autenticación (si es necesario)
 app.UseAuthorization();
-
 app.UseSession();
 
+// Endpoint de la API
+app.MapControllers();
+
+// Configuración de rutas para la aplicación web
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
