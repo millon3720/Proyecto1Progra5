@@ -1,8 +1,10 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ProyectoProgra5.Data;
-using ProyectoProgra5.Models;
 using ProyectoGrupo5.Service;
 using ProyectoGrupo5.Controllers;
 using Stripe;
@@ -29,17 +31,28 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+// Configuración de Cors
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
 // Middleware de autorización y autenticación (si es necesario)
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 

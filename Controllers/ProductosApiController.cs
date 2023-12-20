@@ -21,7 +21,29 @@ namespace ProyectoGrupo5.Controllers
             _context = context;
         }
 
-        // GET: api/Productos
+        [Route("ProductosPrecio")]
+        [HttpGet]
+        public ActionResult<IEnumerable<Productos>> ObtenerTodosLosProductos()
+        {
+            var todosLosProductos = _context.TiendaProductos
+            .Include(tp => tp.Productos)
+            .Include(tp => tp.Tiendas)
+            .Select(tp => new
+            {
+                Id = tp.Productos.Id,
+                Nombre = tp.Productos.Nombre,
+                Descripcion = tp.Productos.Descripcion,
+                Imagen = tp.Productos.Imagen,
+                Precio = tp.Precio,
+                Cantidad = tp.Cantidad
+            })
+            .ToList();
+
+
+            return Ok(todosLosProductos);
+        }
+        // GET: api/ProductosApi
+        [Route("ListaProductos")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Productos>>> GetProductos()
         {
@@ -32,7 +54,8 @@ namespace ProyectoGrupo5.Controllers
             return await _context.Productos.ToListAsync();
         }
 
-        // GET: api/Productos/5
+        // GET: api/ProductosApi/5
+        [Route("BuscarProducto")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Productos>> GetProductos(int id)
         {
@@ -50,8 +73,9 @@ namespace ProyectoGrupo5.Controllers
             return productos;
         }
 
-        // PUT: api/Productos/5
+        // PUT: api/ProductosApi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Route("ActualizarProducto")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProductos(int id, Productos productos)
         {
@@ -81,8 +105,9 @@ namespace ProyectoGrupo5.Controllers
             return NoContent();
         }
 
-        // POST: api/Productos
+        // POST: api/ProductosApi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Route("GuardarProducto")]
         [HttpPost]
         public async Task<ActionResult<Productos>> PostProductos(Productos productos)
         {
@@ -96,7 +121,8 @@ namespace ProyectoGrupo5.Controllers
             return CreatedAtAction("GetProductos", new { id = productos.Id }, productos);
         }
 
-        // DELETE: api/Productos/5
+        // DELETE: api/ProductosApi/5
+        [Route("BorrarProducto")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductos(int id)
         {
