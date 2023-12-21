@@ -8,6 +8,7 @@ using ProyectoProgra5.Data;
 using ProyectoGrupo5.Service;
 using ProyectoGrupo5.Controllers;
 using Stripe;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,17 @@ builder.Services.AddSession(options =>
 });
 
 // Configuración de la API
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(opt => {
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+var misReglas = "ReglasCors";
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name: misReglas, builder => 
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 // Configuración de Stripe
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();

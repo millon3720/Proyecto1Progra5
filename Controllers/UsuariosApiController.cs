@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,28 +23,47 @@ namespace ProyectoGrupo5.Controllers
         {
             _context = context;
         }
-        // GET: api/UsuariosApi/Login
-        [Route("Login")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuarios>>> Login(string Usuario, string Clave)
+       // GET: api/UsuariosApi/Login
+       [Route("Login")]
+       [HttpGet]
+        public async Task<ActionResult<bool>> Login(string Usuario, string Clave)
         {
             if (_context.Usuarios == null)
             {
                 return NotFound();
             }
 
-            // Realizar la consulta y cargar la relación con Rol
             var result = await _context.Usuarios
                 .Where(tp => tp.Correo == Desencriptar(Usuario) && tp.Contraseña == Desencriptar(Clave))
                 .Include(v => v.Rol)
                 .ToListAsync();
 
-            return result;
+            return result.Count > 0;
         }
-        public static string Desencriptar(string Dato)
+        [Route("GuardarUsuario")]
+        [HttpPost]
+        public void Registrarse(String Nombre,String Cedula,String Correo,String Contraseña,String Telefono,String Edad)
         {
-            string key = "Proyecto2";
-            string iv = "Proyecto2";
+            Usuarios u = new Usuarios();
+            u.Nombre=Desencriptar(Nombre);
+            u.Cedula = Desencriptar(Cedula);
+            u.Correo= Desencriptar(Correo);
+            u.Contraseña = Desencriptar(Contraseña);
+            u.Telefono = Desencriptar(Telefono);
+            u.Edad=int.Parse(Desencriptar(Edad));
+            var client = new WebClient();
+            Rol rol = _context.Roles.FirstOrDefault(r => r.Id == 2);
+            u.Rol = rol;
+            _context.Usuarios.Add(u);
+            _context.SaveChanges();
+
+        }
+
+
+        public string Desencriptar(string Dato)
+        {
+            string key = "Proyecto2Proyect";
+            string iv = "Proyecto2Proyect";
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Encoding.UTF8.GetBytes(key);
@@ -129,7 +149,7 @@ namespace ProyectoGrupo5.Controllers
 
         // POST: api/UsuariosApi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Route("GuardarUsuario")]
+        [Route("GuardarUsuario1")]
         [HttpPost]
         public async Task<ActionResult<Usuarios>> PostUsuarios(Usuarios usuarios)
         {

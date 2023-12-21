@@ -23,10 +23,12 @@ namespace ProyectoGrupo5.Controllers
         }
         [Route("CarritoCompras")]
         [HttpGet]
-        public ActionResult<IEnumerable<Ventas>> CarritoCompras(int idUsuario)
+        public ActionResult<IEnumerable<Ventas>> CarritoCompras(String idUsuario)
         {
+            UsuariosApiController Usuario = new UsuariosApiController(_context);
+
             var carritoDeVentas = _context.Ventas
-                .Where(v => v.Usuarios.Id == idUsuario && v.Pendiente == true)
+                .Where(v => v.Usuarios.Id == int.Parse(Usuario.Desencriptar(idUsuario)) && v.Pendiente == true)
                 .Include(v => v.Productos)
                 .ToList();
 
