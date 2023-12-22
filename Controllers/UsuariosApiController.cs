@@ -26,7 +26,7 @@ namespace ProyectoGrupo5.Controllers
        // GET: api/UsuariosApi/Login
        [Route("Login")]
        [HttpGet]
-        public async Task<ActionResult<bool>> Login(string Usuario, string Clave)
+        public async Task<ActionResult<List<Usuarios>>> Login(string Usuario, string Clave)
         {
             if (_context.Usuarios == null)
             {
@@ -38,8 +38,9 @@ namespace ProyectoGrupo5.Controllers
                 .Include(v => v.Rol)
                 .ToListAsync();
 
-            return result.Count > 0;
+            return result;
         }
+
         [Route("GuardarUsuario")]
         [HttpPost]
         public void Registrarse(String Nombre,String Cedula,String Correo,String Contraseña,String Telefono,String Edad)
@@ -64,6 +65,7 @@ namespace ProyectoGrupo5.Controllers
         {
             string key = "Proyecto2Proyect";
             string iv = "Proyecto2Proyect";
+
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Encoding.UTF8.GetBytes(key);
