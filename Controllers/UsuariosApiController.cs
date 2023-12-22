@@ -65,7 +65,7 @@ namespace ProyectoGrupo5.Controllers
         {
             string key = "Proyecto2Proyect";
             string iv = "Proyecto2Proyect";
-
+            Dato = Dato.Replace(" ","+");
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Encoding.UTF8.GetBytes(key);
